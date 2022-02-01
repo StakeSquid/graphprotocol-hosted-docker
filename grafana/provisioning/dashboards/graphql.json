@@ -1,0 +1,327 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 4,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "graphql",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "dark-purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Signalled Tokens"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Staked Tokens"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Query Fees Rebates"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Query Fees Amount"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Indexing Rewards"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 24,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Indexing Rewards"
+          }
+        ]
+      },
+      "pluginVersion": "8.0.1",
+      "targets": [
+        {
+          "aliasBy": "",
+          "annotationTags": "",
+          "annotationText": "",
+          "annotationTitle": "",
+          "constant": 6.5,
+          "dataPath": "subgraphDeployments",
+          "endTimePath": "endTime",
+          "groupBy": "",
+          "hide": false,
+          "queryText": "query MyQuery {\n  subgraphDeployments(orderBy: signalledTokens, orderDirection: desc) {\n    ipfsHash\n    signalledTokens\n    stakedTokens\n    originalName\n    indexingRewardAmount\n    queryFeesAmount\n    queryFeeRebates\n  }\n}",
+          "refId": "B",
+          "timeFormat": null,
+          "timePath": ""
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Avaliable subgraphs",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Indexing Rewards",
+            "binary": {
+              "left": "indexingRewardAmount",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "1000000000000000000"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Query Fees Amount",
+            "binary": {
+              "left": "queryFeesAmount",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "1000000000000000000"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Query Fee Rebates",
+            "binary": {
+              "left": "queryFeeRebates",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "1000000000000000000"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Signalled Tokens",
+            "binary": {
+              "left": "signalledTokens",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "1000000000000000000"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Staked Tokens",
+            "binary": {
+              "left": "stakedTokens",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "1000000000000000000"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "STSR",
+            "binary": {
+              "left": "signalledTokens",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "stakedTokens"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "STSR": false,
+              "Signalled Tokens": false,
+              "indexingRewardAmount": true,
+              "queryFeeRebates": true,
+              "queryFeesAmount": true,
+              "signalledTokens": true,
+              "stakedTokens": true
+            },
+            "indexByName": {
+              "Indexing Rewards": 12,
+              "Query Fee Rebates": 10,
+              "Query Fees Amount": 11,
+              "STSR": 2,
+              "Signalled Tokens": 8,
+              "Staked Tokens": 9,
+              "indexingRewardAmount": 3,
+              "ipfsHash": 0,
+              "originalName": 1,
+              "queryFeeRebates": 4,
+              "queryFeesAmount": 5,
+              "signalledTokens": 6,
+              "stakedTokens": 7
+            },
+            "renameByName": {
+              "Query Fee Rebates": "Query Fees Rebates",
+              "Query Fees Amount": "Query Fees Amount",
+              "STSR": "",
+              "Signalled Tokens": "Signalled Tokens",
+              "Staked Tokens": "Staked Tokens",
+              "indexingRewardAmount": "",
+              "ipfsHash": "IPFS Hash",
+              "originalName": "Deployment Name",
+              "queryFeeRebates": "",
+              "queryFeesAmount": "",
+              "signalledTokens": "",
+              "stakedTokens": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "GraphQL",
+  "uid": "LAczYo6Mk",
+  "version": 11
+}

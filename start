@@ -1,0 +1,11 @@
+EMAIL=email@domain.com \
+QUERY_HOST=query.sld.tld \
+GRAFANA_HOST=grafana.sld.tld \
+ADMIN_USER=your_user \
+ADMIN_PASSWORD=your_password \
+DB_USER=your_db_user \
+DB_PASS=your_db_password \
+GRAPH_NODE_DB_NAME=your_graphnode_db_name \
+ETHEREUM_RPC_0="http://ip:port" \
+IPFS_ENDPOINT="http://ip:port" \
+docker-compose up -d --remove-orphans --build $@
