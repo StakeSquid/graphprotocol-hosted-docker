@@ -32,14 +32,27 @@ services:
       context: ./cli
     container_name: cli
     restart: unless-stopped
-    environment:
-      GEO_COORDINATES: ${GEO_COORDINATES:-69.42069 69.42069}
     tty: true
     networks:
       - monitor-net
     logging: *default-logging
     volumes:
       - ./cli/scripts:/home/graph/scripts
+
+
+######################################################################################
+#####################            IPFS CONTAINER                #######################
+######################################################################################
+
+
+
+  ipfs:
+    image: ipfs/go-ipfs:v0.4.23
+    expose:
+      - 5001
+    volumes:
+      - ./data/ipfs:/data/ipfs
+
 
 
 
@@ -357,6 +370,3 @@ services:
     labels:
       org.label-schema.group: "monitoring"
     logging: *default-logging
-
-
-
