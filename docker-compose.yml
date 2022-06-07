@@ -45,14 +45,16 @@ services:
 ######################################################################################
 
 
-
   ipfs:
     image: ipfs/go-ipfs:v0.4.23
+    container_name: ipfs
     expose:
       - 5001
     volumes:
       - ./data/ipfs:/data/ipfs
-
+    networks:
+      - monitor-net
+    logging: *default-logging
 
 
 
