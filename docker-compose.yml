@@ -62,7 +62,7 @@ services:
 
 
   index-node-0:
-    image: graphprotocol/graph-node:v0.25.0
+    image: graphprotocol/graph-node:v0.26.0
     container_name: index-node-0
     depends_on:
       - postgres
@@ -84,6 +84,7 @@ services:
       GRAPH_LOG: ${GRAPHNODE_LOGLEVEL:-DEBUG}
       GRAPH_ETH_CALL_GAS: 50000000
       GRAPH_GETH_ETH_CALL_ERRORS: "out of gas"
+      GRAPH_MAX_GAS_PER_HANDLER: 1000000000000000
       ETHEREUM_TRACE_STREAM_STEP_SIZE: ${ETHEREUM_TRACE_STREAM_STEP_SIZE:-50}
       ETHEREUM_BLOCK_BATCH_SIZE: ${ETHEREUM_BLOCK_BATCH_SIZE:-10}
       ETHEREUM_RPC_MAX_PARALLEL_REQUESTS: ${ETHEREUM_RPC_MAX_PARALLEL_REQUESTS:-64}
@@ -112,7 +113,7 @@ services:
 
 
   query-node-0:
-    image: graphprotocol/graph-node:v0.25.0
+    image: graphprotocol/graph-node:v0.26.0
     container_name: query-node-0
     depends_on:
       - postgres
@@ -132,6 +133,7 @@ services:
       GRAPH_LOG: INFO
       GRAPH_ETH_CALL_GAS: 50000000
       GRAPH_GETH_ETH_CALL_ERRORS: "out of gas"
+      GRAPH_MAX_GAS_PER_HANDLER: 1000000000000000
       GRAPH_LOG_QUERY_TIMING: gql
       EXPERIMENTAL_SUBGRAPH_VERSION_SWITCHING_MODE: synced
       GRAPH_KILL_IF_UNRESPONSIVE: "true"
@@ -209,7 +211,7 @@ services:
 
 
   postgres:
-    image: postgres:13.5
+    image: postgres:13.6
     container_name: postgres
     command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements"]
     restart: unless-stopped
@@ -236,7 +238,7 @@ services:
 
 
   prometheus:
-    image: prom/prometheus:v2.31.1
+    image: prom/prometheus
     container_name: prometheus
     volumes:
       - ./prometheus:/etc/prometheus
@@ -268,7 +270,7 @@ services:
 
 
   nodeexporter:
-    image: prom/node-exporter:v1.3.1
+    image: prom/node-exporter
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -297,7 +299,7 @@ services:
 
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.43.0
+    image: gcr.io/cadvisor/cadvisor
     container_name: cadvisor
     volumes:
       - /:/rootfs:ro
@@ -323,7 +325,7 @@ services:
 
 
   grafana:
-    image: grafana/grafana:8.3.1
+    image: grafana/grafana
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
@@ -360,7 +362,7 @@ services:
 
 
   pushgateway:
-    image: prom/pushgateway:v1.4.2
+    image: prom/pushgateway
     container_name: pushgateway
     restart: unless-stopped
     expose:
